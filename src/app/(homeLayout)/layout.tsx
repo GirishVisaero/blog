@@ -10,7 +10,7 @@ type Props = {
 const HomeLayout = ({ children }: Props) => {
   return (
     <div className="">
-        {children}
+              {children}
     </div>
   );
 };

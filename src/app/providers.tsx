@@ -13,7 +13,7 @@ type Props = {
 
 export const NextAuthProvider = ({ children }: Props) => {
   return (
-    <ThemeProvider attribute="class">
+    <ThemeProvider attribute="class" themes={['light', 'dark']}>
       <SessionProvider baseUrl={process.env.NEXTAUTH_URL} refetchInterval={30}>
         <SessionVerifier />
         {children}
