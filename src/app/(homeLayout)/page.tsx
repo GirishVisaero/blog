@@ -1,0 +1,77 @@
+import Container from "@/components/Container";
+import axios from "@/lib/axiosInstance";
+// import { MDXRemote } from "next-mdx-remote/rsc";
+import { serialize } from "next-mdx-remote/serialize";
+import Image from "next/image";
+import Link from "next/link";
+import { Suspense } from "react";
+import avatar from "@/avatar.jpg";
+import { Metadata } from "next";
+// import Index from "../index.mdx";
+
+export const metadata: Metadata = {
+  title: "Blog - Girish Chaudhari",
+};
+
+export default async function Home() {
+  return (
+    <>
+      <Suspense fallback={null}>
+        <Container>
+          <div className="flex flex-col justify-center max-w-2xl border-gray-200 dark:border-gray-700 mx-auto pb-16">
+            <div className="flex flex-col-reverse justify-between items-start sm:flex-row">
+              <div className="flex flex-col pr-8">
+                <p className="text-rose-500 dark:text-rose-400">
+                  Hi, my name is
+                </p>
+                <h1 className="font-bold text-3xl md:text-6xl -ml-0.5 mb-2 text-black dark:text-white">
+                  Girish Chaudhari
+                </h1>
+                <p className="text-gray-700 dark:text-gray-200 mb-4">
+                  Web Developer
+                </p>
+                <p className="text-gray-600 dark:text-gray-400 mb-16">
+                  Currently working at Visaero India, Learning more technologies
+                  like (
+                  <a href="https://react.dev/" target="blank">
+                    React
+                  </a>
+                  ,{" "}
+                  <a href="https://nextjs.org/" target="blank">
+                    Next.js
+                  </a>{" "}
+                  etc) working on{" "}
+                  <Link href="/blog/personal-projects">these projects.</Link>{" "}
+                </p>
+                {/* <div>
+                <Link href="https://smugchicken.com">
+                  <a target="_blank" aria-label="Link to Smug Chicken game">
+                    <Image
+                      className="rounded-md"
+                      src="/smug.jpg"
+                      width={800}
+                      height={300}
+                    />
+                  </a>
+                </Link//avatars.githubusercontent.com/u/64349045?v=4nk>
+              </div> */}
+              </div>
+              <div className="w-[80px] sm:w-[200px] relative mb-8 sm:mb-0 ">
+                <Image
+                  alt="Ryan Carmody"
+                  height={176}
+                  width={176}
+                  src={avatar}
+                  sizes="30vw"
+                  priority
+                  className="rounded-full filter grayscale"
+                />
+              </div>
+            </div>
+            <span className="h-24" />
+          </div>
+        </Container>
+      </Suspense>
+    </>
+  );
+}
