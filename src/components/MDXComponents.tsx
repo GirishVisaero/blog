@@ -1,6 +1,8 @@
 import Link from 'next/link';
 import ImageWithTheme from './ImageWithTheme';
 import Image from 'next/image'
+import YouTube from 'react-youtube';
+
 
 const NextImage = (props) => {
   return (
@@ -20,7 +22,7 @@ const CustomLink = (props) => {
 
   if (isInternalLink) {
     return (
-      <Link href={href}>
+      <Link href={href} legacyBehavior>
         <a {...props}>{props.children}</a>
       </Link>
     );
@@ -29,7 +31,22 @@ const CustomLink = (props) => {
   return <a target="_blank" rel="noopener noreferrer" {...props} />;
 };
 
-const WatchOnYouTube = (props) => {
+
+const WatchOnYouTube = ({ videoId }) => {
+  const opts = {
+    height: '360',
+    width: '640',
+    playerVars: {
+      // https://developers.google.com/youtube/player_parameters
+      autoplay: 0,
+    },
+  };
+
+  return <YouTube videoId={videoId} opts={opts} />;
+};
+
+
+const WatchOnYouTubeLink = (props) => {
   return (
     <div className="youtube flex items-center gap-2">
       <Image
@@ -50,7 +67,8 @@ const MDXComponents = {
   a: CustomLink,
   ImageWithTheme,
   img: NextImage,
-  WatchOnYouTube
+  WatchOnYouTube,
+  WatchOnYouTubeLink
 };
 
 export default MDXComponents;

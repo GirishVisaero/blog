@@ -1,5 +1,6 @@
 import Image from 'next/image';
 import Link from 'next/link';
+import avatar from '@/avatar.jpg'
 
 export default function Author({ readingTime, date }) {
   const options: any = {
@@ -16,9 +17,9 @@ export default function Author({ readingTime, date }) {
           <a className="flex gap-4 items-center">
             <div className="relative w-12 h-12">
               <Image
-                src={'/me-100x100.png'}
-                layout="fill"
-                alt="Image of Ryan, the Author"
+                src={avatar}
+                fill
+                alt="Image of Girish Chaudhari, the Author"
                 className="rounded-full grayscale"
               ></Image>
             </div>

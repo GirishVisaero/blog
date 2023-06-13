@@ -17,7 +17,7 @@ const getData = async () => {
 
 const page = async (props: Props) => {
   const data = await getData();
-//   console.log(data)
+  console.log(data)
   return (
     <Container
       title="Blog/Code – Ryan Carmody"
@@ -36,13 +36,13 @@ const page = async (props: Props) => {
           </p>
           <p>
             You can search{" "}
-            <Link href={"/category"}>
+            <Link href={"/category"} legacyBehavior>
               <a>by category. </a>
             </Link>
           </p>
         </div>
         <h2 className="mb-4">Latest articles</h2>
-        <LatestPosts posts={data} />
+        <LatestPosts posts={data.posts} />
       </div>
     </Container>
   );

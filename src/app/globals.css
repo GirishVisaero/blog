@@ -6,6 +6,11 @@
   font-family: "Poppins";
 }
 
+pre *{
+  font-family:monospace ;
+}
+
+
 @font-face {
   font-family: 'Poppins';
   src: local('Poppins Thin'), local('Poppins-Thin'), url('../fonts/Poppins-Thin.ttf') format('truetype');
