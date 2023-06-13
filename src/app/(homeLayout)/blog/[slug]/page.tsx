@@ -1,9 +1,6 @@
+import RemoteMDX from '@/components/RemoteMDX';
 import BlogLayout from '@/layouts/blog';
 import { mdxToHtml } from '@/lib/mdx';
-import { MDXRemote } from 'next-mdx-remote';
-import React from 'react';
-import components from '@/components/MDXComponents';
-import RemoteMDX from '@/components/RemoteMDX';
 
 
 type Props = {};
@@ -13,8 +10,7 @@ let postData = {
   name: 'markup',
   title: 'first blog',
   tagName: 'nextjs',
-  content:
-    '\n <WatchOnYouTube videoId="lD7i1jGBeMk" title="woeking" /> \n A paragraph with *emphasis* and **strong importance**.\n\n> A block quote with ~strikethrough~ and a URL: https://reactjs.org.\n\n* Lists\n* [ ] todo\n* [x] done\n\nA table:\n\n| a | b |\n| - | - |\n\nThis is a [Next.js](https://nextjs.org/) project bootstrapped with [\'create-next-app\'](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).\n\n## Getting Started\n\nFirst, run the development server:\n\n~~~bash\nnpm run dev\n# or\nyarn dev\n\n~~~\n\nOpen [http://localhost:3000](http://localhost:3000) with your browser to see the result.\n\nYou can start editing the page by modifying \'pages/index.js\'. The page auto-updates as you edit the file.\n\n[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in \'pages/api/hello.js\'.\n\nThe \'pages/api\' directory is mapped to \'/api/*\'. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.\n\n## Learn More\n\nTo learn more about Next.js, take a look at the following resources:\n\n- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.\n- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.\n\nYou can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!\n\n## Deploy on Vercel\n\n <youtube videoId="dQw4w9WgXcQ" /> \n\nThe easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.\n\nCheck out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.\n\n\n\n~~~jsx /carrot/ /apple/\nconsole.log(\'It works!\')\n\n\n"use client";\nimport React from "react";\nimport ReactMarkdown from "react-markdown";\nimport remarkGfm from "remark-gfm";\nimport rehypeRaw from "rehype-raw";\nimport { Prism as SyntaxHighlighter } from "react-syntax-highlighter";\nimport { dracula} from "react-syntax-highlighter/dist/esm/styles/prism";\n\ninterface MarkDownProps {\n  children?: React.ReactNode;\n  content: string | any;\n}\n\nconst MarkDownReader: React.FC<MarkDownProps> = ({ children, content }) => {\n\n  return (\n    <>\n      <ReactMarkdown\n        children={content}\n        rehypePlugins={[rehypeRaw]}\n        remarkPlugins={[remarkGfm]}\n        components={{\n            a: ({node, ...props}) => <a className="text-[#484cff]" {...props} />,\n          code({ node, inline, className, children, ...props }) {\n            const match = /language-(\\w+)/.exec(className || "");\n            return !inline && match ? (\n              <SyntaxHighlighter\n              customStyle={{fontSize:14}}\n                {...props}\n                wrapLongLines\n                showLineNumbers\n                children={String(children).replace(/\\n$/, "")}\n                style={dracula}\n                language={match[1]}\n                PreTag="div"\n              />\n            ) : (\n              <code {...props} className={className}>\n                {children}\n              </code>\n            );\n          },\n        }}\n      />\n    </>\n  );\n};\n\nexport default MarkDownReader;\n\n~~~',
+  content: "# rehype-code-titles\n\n[![npm](https://img.shields.io/npm/v/rehype-code-titles?style=flat-square)](https://www.npmjs.com/package/rehype-code-titles)\n\n[![All Contributors](https://img.shields.io/github/all-contributors/projectOwner/projectName?color=ee8449&style=flat-square)](#contributors)\n\n Rehype plugin for parsing code blocks and adding titles to code blocks\n\n## Why?\n\nI moved my blog over to using [`mdx-bundler`](https://github.com/kentcdodds/mdx-bundler) which uses [`xdm`](https://github.com/wooorm/xdm) under the hood to parse the markdown and MDX files. I was using [`remark-code-titles`](https://github.com/mottox2/remark-code-titles#readme) prior to this move and unfortunately it no longer worked. I believe this was because of the order plugins were being applied internally for `xdm`. I'd never really worked with `remark` or `rehype` directly before and didn't have a lot of experience with ASTs so this was a fun little project that I initially built directly into my blog before pulling it out at a plugin to ship to other developers.\n\nMany thanks to [@mottox2](https://github.com/mottox2), [@mapbox](https://github.com/mapbox), & [@wooorm](https://github.com/wooorm) for their prior work in this ecosystem it was of great help when creating this plugin.\n\n## Installation\n\n> This package is [ESM only](https://gist.github.com/sindresorhus/a39789f98801d908bbc7ff3ecc99d99c):\n\n> Node 12+ is needed to use it and it must be `import`ed instead of `require`d.\n\n```shell:bash\nnpm install rehype-code-titles\n\nyarn add rehype-code-titles\n\npnpm add rehype-code-titles\n\n```\n\n## API\n\nThis package exports no identifiers. The default export is `rehypeCodeTitles`\n\n### `rehype().use(rehypeCodeTitles[, options])`\n\nAdd support for stripping out code titles from input.\n\n#### `options`\n\n##### `options.customClassName`\n\nSpecify your own custom css class name to apply. Defaults to `rehype-code-title`.\n\nNote: you will have to write the CSS implementation yourself.\n\nFor example\n\n```css:styles.css\n\n// some global css file\n.rehype-code-title {\nmargin-bottom: -0.6rem;\npadding: 0.5em 1em;\nfont-family: Consolas, 'Andale Mono WT', 'Andale Mono', 'Lucida Console',\n'Lucida Sans Typewriter', 'DejaVu Sans Mono', 'Bitstream Vera Sans Mono',\n'Liberation Mono', 'Nimbus Mono L', Monaco, 'Courier New', Courier,\nmonospace;\n\nbackground-color: black;\ncolor: white;\nz-index: 0;\nborder-top-left-radius: 0.3em;\nborder- top - right - radius: 0.3em;\n\n}\n\n```\n\n",
   published: false,
   authorId: '647acd3df2c57d976165715a',
   createdAt: '2023-06-09T16:11:50.062Z',
@@ -30,7 +26,7 @@ const getServerData = async () => {
       description: postData.title,
       date: postData.createdAt,
       socialImage: '/',
-      slug:'/',
+      slug: '/',
       tags: ['next.js'],
       readingTime: readingTime,
       tag: [{ tagName: 'next.js' }]
@@ -42,15 +38,7 @@ const page = async (props: Props) => {
   let { post } = await getServerData();
   return (
     <BlogLayout post={post}>
-        <RemoteMDX content={post.content} />
-      {/* <MDXRemote
-        {...post.content}
-        components={
-          {
-            ...components
-          } as any
-        }
-      /> */}
+      <RemoteMDX content={post.content} />
     </BlogLayout>
   );
 };

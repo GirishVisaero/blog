@@ -18,16 +18,18 @@ model Account {
 }
 
 model Post {
-  id          String       @id @default(auto()) @map("_id") @db.ObjectId
-  authorId    String       @db.ObjectId
-  content     String
-  createdAt   DateTime     @db.Date
-  name        String
-  published   Boolean
-  postContent Postcontent?
-  slug        String       @unique
-  title       String
-  updatedAt   DateTime     @db.Date
+  id                String      @id @default(auto()) @map("_id") @db.ObjectId
+  authorId          String      @db.ObjectId
+  content           String
+  createdAt         DateTime    @db.Date
+  name              String
+  published         Boolean
+  postContent       Postcontent
+  slug              String      @unique
+  title             String
+  updatedAt         DateTime    @db.Date
+
+  @@unique([postContent.heading])
 }
 
 type Postcontent {
