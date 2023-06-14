@@ -18,24 +18,18 @@ model Account {
 }
 
 model Post {
-  id                String      @id @default(auto()) @map("_id") @db.ObjectId
-  authorId          String      @db.ObjectId
-  content           String
-  createdAt         DateTime    @db.Date
-  name              String
-  published         Boolean
-  postContent       Postcontent
-  slug              String      @unique
-  title             String
-  updatedAt         DateTime    @db.Date
-
-  @@unique([postContent.heading])
-}
-
-type Postcontent {
-  imgUrl      String
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  author      User?    @relation(fields: [authorId], references: [id])
+  authorId    String   @db.ObjectId
+  content     String
+  name        String
+  published   Boolean  @default(true)
+  title       String
+  createdAt   DateTime @db.Date
+  updatedAt   DateTime @db.Date
+  slug        String   @unique
   description String
-  heading     String
+  heading     String   @unique
   tags        String[]
 }
 
@@ -50,13 +44,14 @@ model Session {
 model User {
   id            String   @id @default(auto()) @map("_id") @db.ObjectId
   access_token  String?
-  createdAt     DateTime @db.Date
   email         String   @unique
   expires_at    BigInt?
   name          String
   password      String
   refresh_token String?
+  createdAt     DateTime @db.Date
   updatedAt     DateTime @db.Date
+  Post          Post[]
 }
 
 model VerificationToken {

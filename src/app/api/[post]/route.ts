@@ -10,12 +10,13 @@ export async function GET(req: Request) {
     const { searchParams } = new URL(req.url);
     const postId = searchParams.get("post") as string;
     // console.log("postId query", searchParams.get('post'));
-
+    console.log(postId)
     const postData = await prisma.post.findUnique({
       where: {
         id: postId,
       },
     });
+    console.log('postdata ', postData)
 
     return NextResponse.json({
       status: "success",
@@ -50,7 +51,7 @@ export async function POST(req: Request) {
       name: string;
     };
     console.log(title);
-    
+
     const session = await getServerSession(authOptions);
     console.log("session", session);
 
@@ -59,8 +60,7 @@ export async function POST(req: Request) {
       data: {
         name,
         title,
-        content,
-        author: { connect: { email: session?.user?.email as string } },
+        content
       },
     });
 
