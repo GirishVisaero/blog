@@ -1,7 +1,8 @@
 import RemoteMDX from '@/components/RemoteMDX';
 import BlogLayout from '@/layouts/blog';
 import { mdxToHtml } from '@/lib/mdx';
-import axios from '@/lib/axiosInstance';
+// import axios from '@/lib/axiosInstance';
+import axios from 'axios';
 
 
 type Props = {};
@@ -19,9 +20,11 @@ let postData = {
 };
 
 const getServerData = async () => {
-  let res = await axios.get('/post?postId=64834f4964ab0101da00f920')
-  
+  let res = await axios.get('http://localhost:8080/api/post?postId=64834f4964ab0101da00f920')
+  console.log('working >>', res)
   console.log('data', res)
+  console.log('working >>')
+  
   const { html, readingTime } = await mdxToHtml(postData.content);
   return {
     post: {

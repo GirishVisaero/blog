@@ -5,11 +5,12 @@ import { getServerSession } from "next-auth";
 import { getSession } from "next-auth/react";
 import { NextResponse } from "next/server";
 
-export async function GET(req: Request) {
+export async function GET(req: Request, { params }: { params: { slug: string } } ) {
   try {
     const { searchParams } = new URL(req.url);
-    const postId = searchParams.get("post") as string;
-    // console.log("postId query", searchParams.get('post'));
+    console.log("using slug >>",params.slug)
+    const postId = searchParams.get("postId") as string;
+    console.log("postId query", searchParams.get('postId'));
     console.log(postId)
     const postData = await prisma.post.findUnique({
       where: {
